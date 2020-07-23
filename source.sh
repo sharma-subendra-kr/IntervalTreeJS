@@ -1,6 +1,3 @@
-# This is a release of IntervalTreeJS, brought to you by Subendra Kumar Sharma.
-# This software is released under the terms of the GNU General Public License version 3, or (at your option) any later version.
-
 # IntervalTreeJS, a JavaScript Binary Search Tree library that helps to query, insert and delete intervals in the binary search tree.
 
 # Copyright © 2020, Subendra Kumar Sharma. All Rights reserved. (jobs.sharma.subendra.kr@gmail.com)
@@ -20,7 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with IntervalTreeJS.  If not, see <https://www.gnu.org/licenses/>.
 
-
+# Written by Subendra Kumar Sharma.
 
 export NODE_ENV="production" #"development or production"
 export PORT=3000
