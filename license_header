@@ -22,9 +22,3 @@ along with IntervalTreeJS.  If not, see <https://www.gnu.org/licenses/>.
 Written by Subendra Kumar Sharma.
 
 */
-
-import IntervalTreesRecursive from "./intervalTreesRecursive";
-import IntervalTreesIterative from "./intervalTreesIterative";
-import "./index.css";
-
-export { IntervalTreesRecursive, IntervalTreesIterative };

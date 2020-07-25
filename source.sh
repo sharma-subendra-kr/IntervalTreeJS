@@ -21,4 +21,4 @@
 
 export NODE_ENV="production" #"development or production"
 export PORT=3000
-export MINIMIZE=false
+export MINIMIZE=true
