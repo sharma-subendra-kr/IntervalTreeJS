@@ -23,42 +23,31 @@ Written by Subendra Kumar Sharma.
 
 */
 
-var fs = require("fs");
-var path = require("path");
+const fs = require("fs");
+const path = require("path");
 
-var MiniCssExtractPlugin = require("mini-css-extract-plugin");
-var miniCssExtractPlugin = new MiniCssExtractPlugin({ filename: "index.css" });
-var WebpackNotifierPlugin = require("webpack-notifier");
-var webpackNotifierPlugin = new WebpackNotifierPlugin({
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const miniCssExtractPlugin = new MiniCssExtractPlugin({
+  filename: "index.css",
+});
+const WebpackNotifierPlugin = require("webpack-notifier");
+const webpackNotifierPlugin = new WebpackNotifierPlugin({
   title: "interval-trees",
   alwaysNotify: true,
 });
-var Webpack = require("webpack");
-var webpackBannerPlugin = new Webpack.BannerPlugin({
+const Webpack = require("webpack");
+const webpackBannerPlugin = new Webpack.BannerPlugin({
   banner: fs.readFileSync("./license_header", "utf8"),
   raw: true,
 });
 
 module.exports = {
-  mode: process.env.NODE_ENV === "development" ? "development" : "production",
-  devtool:
-    process.env.NODE_ENV === "development" ? "inline-source-map" : "none",
   entry: __dirname + "/src/index.js",
   optimization: {
     minimize: process.env.MINIMIZE === "true" ? true : false,
   },
   output: {
-    path:
-      process.env.NODE_ENV === "development"
-        ? __dirname + "/public/assets"
-        : __dirname + "/dist/umd/",
     publicPath: "assets",
-    filename:
-      process.env.NODE_ENV === "development"
-        ? "index.js"
-        : process.env.MINIMIZE === "true"
-        ? "interval.tree.js.production.min.js"
-        : "interval.tree.js.development.js",
     library: "IntervalTreeJS",
     libraryTarget: "umd",
   },
