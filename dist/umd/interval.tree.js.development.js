@@ -2,7 +2,7 @@
 
 IntervalTreeJS, a JavaScript Binary Search Tree library that helps to query, insert and delete intervals in the binary search tree.
 
-Copyright © 2019-2020, Subendra Kumar Sharma. All Rights reserved. (jobs.sharma.subendra.kr@gmail.com)
+Copyright © 2019-2020 Subendra Kumar Sharma. All Rights reserved. (jobs.sharma.subendra.kr@gmail.com)
 
 This file is part of IntervalTreeJS.
 
@@ -141,7 +141,7 @@ __webpack_require__.d(__webpack_exports__, "IntervalTreesIterative", function() 
 
 IntervalTreeJS, a JavaScript Binary Search Tree library that helps to query, insert and delete intervals in the binary search tree.
 
-Copyright © 2019-2020, Subendra Kumar Sharma. All Rights reserved. (jobs.sharma.subendra.kr@gmail.com)
+Copyright © 2019-2020 Subendra Kumar Sharma. All Rights reserved. (jobs.sharma.subendra.kr@gmail.com)
 
 This file is part of IntervalTreeJS.
 
@@ -294,7 +294,7 @@ var removeTrailingEmptyFromArray = function removeTrailingEmptyFromArray(source)
 
 IntervalTreeJS, a JavaScript Binary Search Tree library that helps to query, insert and delete intervals in the binary search tree.
 
-Copyright © 2019-2020, Subendra Kumar Sharma. All Rights reserved. (jobs.sharma.subendra.kr@gmail.com)
+Copyright © 2019-2020 Subendra Kumar Sharma. All Rights reserved. (jobs.sharma.subendra.kr@gmail.com)
 
 This file is part of IntervalTreeJS.
 
@@ -444,7 +444,7 @@ var printBinaryTree = function printBinaryTree(root, length) {
 
 IntervalTreeJS, a JavaScript Binary Search Tree library that helps to query, insert and delete intervals in the binary search tree.
 
-Copyright © 2019-2020, Subendra Kumar Sharma. All Rights reserved. (jobs.sharma.subendra.kr@gmail.com)
+Copyright © 2019-2020 Subendra Kumar Sharma. All Rights reserved. (jobs.sharma.subendra.kr@gmail.com)
 
 This file is part of IntervalTreeJS.
 
@@ -790,7 +790,7 @@ IntervalTreeRecursive.prototype.printHtmlTree = function () {
 
 IntervalTreeJS, a JavaScript Binary Search Tree library that helps to query, insert and delete intervals in the binary search tree.
 
-Copyright © 2019-2020, Subendra Kumar Sharma. All Rights reserved. (jobs.sharma.subendra.kr@gmail.com)
+Copyright © 2019-2020 Subendra Kumar Sharma. All Rights reserved. (jobs.sharma.subendra.kr@gmail.com)
 
 This file is part of IntervalTreeJS.
 
@@ -1274,7 +1274,7 @@ var src = __webpack_require__(0);
 
 IntervalTreeJS, a JavaScript Binary Search Tree library that helps to query, insert and delete intervals in the binary search tree.
 
-Copyright © 2019-2020, Subendra Kumar Sharma. All Rights reserved. (jobs.sharma.subendra.kr@gmail.com)
+Copyright © 2019-2020 Subendra Kumar Sharma. All Rights reserved. (jobs.sharma.subendra.kr@gmail.com)
 
 This file is part of IntervalTreeJS.
 
