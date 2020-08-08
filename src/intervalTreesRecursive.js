@@ -57,7 +57,7 @@ function IntervalTreeRecursive(options) {
 
 IntervalTreeRecursive.prototype.constructor = IntervalTreeRecursive;
 
-IntervalTreeRecursive.prototype.constructNode = function(interval) {
+IntervalTreeRecursive.prototype.constructNode = function (interval) {
 	return {
 		max: interval.high,
 		min: interval.low,
@@ -68,29 +68,29 @@ IntervalTreeRecursive.prototype.constructNode = function(interval) {
 	};
 };
 
-IntervalTreeRecursive.prototype.constructTree = function() {
-	let length = this.data.length;
+IntervalTreeRecursive.prototype.constructTree = function () {
+	const length = this.data.length;
 	for (let i = 0; i < length; i++) {
 		this.root = this.insert(this.data[i], this.root);
 	}
 };
 
-IntervalTreeRecursive.prototype.insertRoot = function(interval) {
+IntervalTreeRecursive.prototype.insertRoot = function (interval) {
 	// this function is deprecated
 	this.root = this.constructNode(interval);
 	return this.root;
 };
 
-IntervalTreeRecursive.prototype.getRoot = function() {
+IntervalTreeRecursive.prototype.getRoot = function () {
 	return this.root;
 };
 
-IntervalTreeRecursive.prototype.insert = function(interval) {
+IntervalTreeRecursive.prototype.insert = function (interval) {
 	this.root = this._insert(this.root, interval);
 	return this.root;
 };
 
-IntervalTreeRecursive.prototype._insert = function(root, interval) {
+IntervalTreeRecursive.prototype._insert = function (root, interval) {
 	if (root === null) {
 		this.length++;
 		return this.constructNode(interval);
@@ -100,7 +100,7 @@ IntervalTreeRecursive.prototype._insert = function(root, interval) {
 		root.left = this._insert(root.left, interval);
 	} else if (root.interval.low === interval.low) {
 		this.length++;
-		let tempLeftSubtree = root.left;
+		const tempLeftSubtree = root.left;
 		root.left = this.constructNode(interval);
 		root.left.left = tempLeftSubtree;
 		const newMinMax = getNewMinMax(root.left);
@@ -121,68 +121,95 @@ IntervalTreeRecursive.prototype._insert = function(root, interval) {
 	return root;
 };
 
-IntervalTreeRecursive.prototype.find = function(interval, d) {
-	return this._find(this.root, interval, d);
+IntervalTreeRecursive.prototype.find = function (interval, d, findType, comp) {
+	return this._find(this.root, interval, d, findType, comp);
 };
 
-IntervalTreeRecursive.prototype._find = function(root, interval, d) {
+IntervalTreeRecursive.prototype._find = function (
+	root,
+	interval,
+	d,
+	findType,
+	comp
+) {
 	if (root === null) return null;
 
 	if (
 		this.doOverlap(root.interval, interval) &&
-		(d !== null && d !== undefined ? (root.d === d ? true : false) : true)
+		(d !== null && d !== undefined ? root.d === d : true) &&
+		(comp ? comp(root, interval, d) : true)
 	) {
 		return root;
 	}
 
 	if (root.left !== null && root.left.max >= interval.low) {
 		// go left
-		return find(root.left, interval);
+		return this._find(root.left, interval, d, findType, comp);
 	} else {
 		// go right
-		return find(root.right, interval);
+		return this._find(root.right, interval, d, findType, comp);
 	}
 };
 
-IntervalTreeRecursive.prototype.findAll = function(interval, d) {
+IntervalTreeRecursive.prototype.findAll = function (
+	interval,
+	d,
+	findType,
+	comp
+) {
 	var stack = [];
-	this._findAll(this.root, interval, d, stack);
+	this._findAll(this.root, interval, d, findType, comp, stack);
 	return stack;
 };
 
-IntervalTreeRecursive.prototype._findAll = function(root, interval, d, stack) {
+IntervalTreeRecursive.prototype._findAll = function (
+	root,
+	interval,
+	d,
+	findType,
+	comp,
+	stack
+) {
 	if (root === null) return null;
 
 	if (
 		this.doOverlap(root.interval, interval) &&
-		(d !== null && d !== undefined ? (root.d === d ? true : false) : true)
+		(d !== null && d !== undefined ? root.d === d : true) &&
+		(comp ? comp(root, interval, d) : true)
 	) {
 		stack.push(root);
 	}
 
 	if (root.left !== null && root.left.max >= interval.low) {
 		// go left
-		this._findAll(root.left, interval, stack);
+		this._findAll(root.left, interval, d, findType, comp, stack);
 	}
 	if (root.right !== null && root.right.min <= interval.high) {
 		// go right
-		this._findAll(root.right, interval, stack);
+		this._findAll(root.right, interval, d, findType, comp, stack);
 	}
 };
 
-IntervalTreeRecursive.prototype.remove = function(interval, d) {
+IntervalTreeRecursive.prototype.remove = function (interval, d, comp) {
 	var removed = null;
-	this._remove(this.root, interval, d, removed);
+	this._remove(this.root, interval, d, comp, removed);
 	return removed;
 };
 
-IntervalTreeRecursive.prototype._remove = function(root, interval, d, removed) {
+IntervalTreeRecursive.prototype._remove = function (
+	root,
+	interval,
+	d,
+	comp,
+	removed
+) {
 	if (root === null) return root;
 
 	if (
 		root.interval.low === interval.low &&
 		root.interval.high === interval.high &&
-		(d !== null && d !== undefined ? (root.d === d ? true : false) : true)
+		(d !== null && d !== undefined ? root.d === d : true) &&
+		(comp ? comp(root, interval, d) : true)
 	) {
 		removed = {
 			low: root.interval.low,
@@ -216,48 +243,49 @@ IntervalTreeRecursive.prototype._remove = function(root, interval, d, removed) {
 
 	if (root.interval.low >= interval.low) {
 		// go left
-		root.left = this._remove(root.left, interval, d, removed);
-		let newMinMax = getNewMinMax(root);
+		root.left = this._remove(root.left, interval, d, comp, removed);
+		const newMinMax = getNewMinMax(root);
 		root.min = newMinMax.min;
 		root.max = newMinMax.max;
 	} else if (root.right !== null && root.interval.low < interval.low) {
 		// new condition: root.right !== null && root.interval.low < interval.low
 		// old condition: root.right !== null && root.right.min <= interval.high
 		// go right
-		root.right = this._remove(root.right, interval, d, removed);
-		let newMinMax = getNewMinMax(root);
+		root.right = this._remove(root.right, interval, d, comp, removed);
+		const newMinMax = getNewMinMax(root);
 		root.min = newMinMax.min;
 		root.max = newMinMax.max;
 	}
 	return root;
 };
 
-IntervalTreeRecursive.prototype.removeAll = function(interval, d) {
+IntervalTreeRecursive.prototype.removeAll = function (interval, d, comp) {
 	var removed = [];
-	this._removeAll(this.root, interval, d, removed);
+	this._removeAll(this.root, interval, d, comp, removed);
 	return removed;
 };
 
-IntervalTreeRecursive.prototype._removeAll = function(
+IntervalTreeRecursive.prototype._removeAll = function (
 	root,
 	interval,
 	d,
+	comp,
 	removed
 ) {
 	if (root === null) return root;
 
 	if (root.interval.low >= interval.low) {
 		// go left
-		root.left = this._removeAll(root.left, interval, d, removed);
-		let newMinMax = getNewMinMax(root);
+		root.left = this._removeAll(root.left, interval, d, comp, removed);
+		const newMinMax = getNewMinMax(root);
 		root.min = newMinMax.min;
 		root.max = newMinMax.max;
 	} else if (root.right !== null && root.interval.low < interval.low) {
 		// new condition: root.right !== null && root.interval.low < interval.low
 		// old condition: root.right !== null && root.right.min <= interval.high
 		// go right
-		root.right = this._removeAll(root.right, interval, d, removed);
-		let newMinMax = getNewMinMax(root);
+		root.right = this._removeAll(root.right, interval, d, comp, removed);
+		const newMinMax = getNewMinMax(root);
 		root.min = newMinMax.min;
 		root.max = newMinMax.max;
 	}
@@ -265,7 +293,8 @@ IntervalTreeRecursive.prototype._removeAll = function(
 	if (
 		root.interval.low === interval.low &&
 		root.interval.high === interval.high &&
-		(d !== null && d !== undefined ? (root.d === d ? true : false) : true)
+		(d !== null && d !== undefined ? root.d === d : true) &&
+		(comp ? comp(root, interval, d) : true)
 	) {
 		removed.push({
 			low: root.interval.low,
@@ -297,14 +326,14 @@ IntervalTreeRecursive.prototype._removeAll = function(
 	return root;
 };
 
-IntervalTreeRecursive.prototype.getDataInArray = function() {
+IntervalTreeRecursive.prototype.getDataInArray = function () {
 	const elements = new Array(this.length);
 	const iter = { iter: 0 };
 	this.getArray(this.root, elements, iter);
 	return elements;
 };
 
-IntervalTreeRecursive.prototype.getArray = function(root, elements, iter) {
+IntervalTreeRecursive.prototype.getArray = function (root, elements, iter) {
 	if (root === null) return null;
 
 	if (root.left !== null) {
@@ -323,7 +352,7 @@ IntervalTreeRecursive.prototype.getArray = function(root, elements, iter) {
 	}
 };
 
-IntervalTreeRecursive.prototype.doOverlap = function(interval, _interval) {
+IntervalTreeRecursive.prototype.doOverlap = function (interval, _interval) {
 	if (interval.low <= _interval.high && _interval.low <= interval.high) {
 		return true;
 	} else {
@@ -331,7 +360,7 @@ IntervalTreeRecursive.prototype.doOverlap = function(interval, _interval) {
 	}
 };
 
-IntervalTreeRecursive.prototype.isExact = function(interval, _interval) {
+IntervalTreeRecursive.prototype.isExact = function (interval, _interval) {
 	if (interval.low === _interval.low && interval.high === _interval.high) {
 		return true;
 	} else {
@@ -339,7 +368,7 @@ IntervalTreeRecursive.prototype.isExact = function(interval, _interval) {
 	}
 };
 
-IntervalTreeRecursive.prototype.printHtmlTree = function() {
+IntervalTreeRecursive.prototype.printHtmlTree = function () {
 	return printBinaryTree(this.root, this.length);
 };
 
