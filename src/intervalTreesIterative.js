@@ -241,6 +241,56 @@ IntervalTreeIterative.prototype._findAll = function (
 	return finalStack;
 };
 
+IntervalTreeIterative.prototype.findUsingComparator = function (
+	comp,
+	lcomp,
+	rcomp
+) {
+	return this._findUsingComparator(this.root, comp, lcomp, rcomp);
+};
+
+IntervalTreeIterative.prototype._findUsingComparator = function (
+	root,
+	comp,
+	lcomp,
+	rcomp
+) {
+	if (root === null) return [];
+
+	const result = new Array(this.length);
+	let count = 0;
+
+	const stack = new Array(this.length);
+	let stackIter = -1;
+	let top;
+
+	stack[++stackIter] = root;
+
+	while (stackIter >= 0) {
+		top = stack[stackIter];
+		stackIter--;
+
+		if (comp(top)) {
+			result[count++] = top;
+		}
+
+		if (top.right !== null && rcomp(top)) {
+			stack[++stackIter] = top.right;
+		}
+
+		if (top.left !== null && lcomp(top)) {
+			stack[++stackIter] = top.left;
+		}
+	}
+
+	const filteredResult = new Array(count);
+	for (let i = 0; i < count; i++) {
+		filteredResult[i] = result[i];
+	}
+
+	return filteredResult;
+};
+
 IntervalTreeIterative.prototype.remove = function (interval, d, comp) {
 	return this._remove(this.root, interval, d, comp);
 };
