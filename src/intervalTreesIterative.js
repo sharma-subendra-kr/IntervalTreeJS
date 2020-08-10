@@ -577,8 +577,8 @@ IntervalTreeIterative.prototype.isExact = function (interval, _interval) {
 	}
 };
 
-IntervalTreeIterative.prototype.printHtmlTree = function () {
-	return printBinaryTree(this.root, this.length);
+IntervalTreeIterative.prototype.printHtmlTree = function (func) {
+	return printBinaryTree(this.root, this.length, func);
 };
 
 export default IntervalTreeIterative;
