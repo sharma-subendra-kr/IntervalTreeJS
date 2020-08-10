@@ -335,7 +335,7 @@ var getNodelevel = function getNodelevel(root, node) {
 
   return level;
 };
-var printBinaryTree = function printBinaryTree(root, length) {
+var printBinaryTree = function printBinaryTree(root, length, func) {
   var _root = JSON.parse(JSON.stringify(root));
 
   var s = new Array(length);
@@ -417,7 +417,7 @@ var printBinaryTree = function printBinaryTree(root, length) {
       html[top.level] = "<g class=\"interval-tree-print-level\" data-attr=\"level-".concat(top.level, "\" transform=\"translate(", 0, ", ").concat(top.level * TOTAL_HEIGHT, ")\">");
     }
 
-    html[top.level] += "<g class=\"interval-tree-print-node\" transform=\"translate(".concat(top.pos.x, ", ").concat(top.pos.y, ")\">\n\t\t\t<text class=\"interval-tree-print-node-id\" dx=\"5\" dy=\"0\">id: ").concat(top.id, "</text>\n\t\t\t<text class=\"interval-tree-print-node-parentId\" dx=\"5\" dy=\"15\">pId: ").concat(!isNaN(top.parentId) ? top.parentId : "none", "</text>\n\t\t\t<text class=\"interval-tree-print-node-interval\" dx=\"5\" dy=\"30\">l: ").concat(top.interval.low, ", h: ").concat(top.interval.high, "</text>\n\t\t\t<text class=\"interval-tree-print-node-minmax\" dx=\"5\" dy=\"45\">m: ").concat(top.min, ", x: ").concat(top.max, "</text></g>");
+    html[top.level] += "<g class=\"interval-tree-print-node\" transform=\"translate(".concat(top.pos.x, ", ").concat(top.pos.y, ")\">\n\t\t\t<text class=\"interval-tree-print-node-id\" dx=\"5\" dy=\"0\">id: ").concat(top.id, "</text>\n\t\t\t<text class=\"interval-tree-print-node-parentId\" dx=\"5\" dy=\"15\">pId: ").concat(!isNaN(top.parentId) ? top.parentId : "none", "</text>\n\t\t\t<text class=\"interval-tree-print-node-interval\" dx=\"5\" dy=\"30\">l: ").concat(top.interval.low, ", h: ").concat(top.interval.high, "</text>\n\t\t\t<text class=\"interval-tree-print-node-minmax\" dx=\"5\" dy=\"45\">m: ").concat(top.min, ", x: ").concat(top.max, "</text>\n\t\t\t").concat(func ? "<text class=\"interval-tree-print-node-custom\"  dx=\"5\" dy=\"60\">\n\t\t\t".concat(func(top), "</text>") : "", "\n\t\t\t</g>");
 
     if (top.parent) {
       var line = "<line x1=\"".concat(top.parent.pos.c, "\" y1=\"").concat(top.parent.level * TOTAL_HEIGHT + MARGIN + BORDER + HEIGHT + BORDER, "\" x2=\"").concat(top.pos.c, "\" y2=\"").concat(top.level * TOTAL_HEIGHT + MARGIN + BORDER, "\" class=\"interval-tree-print-arrow\" stroke=\"black\"/>");
@@ -1300,8 +1300,8 @@ IntervalTreeIterative.prototype.isExact = function (interval, _interval) {
   }
 };
 
-IntervalTreeIterative.prototype.printHtmlTree = function () {
-  return printBinaryTree(this.root, this.length);
+IntervalTreeIterative.prototype.printHtmlTree = function (func) {
+  return printBinaryTree(this.root, this.length, func);
 };
 
 /* harmony default export */ var intervalTreesIterative = (IntervalTreeIterative);
