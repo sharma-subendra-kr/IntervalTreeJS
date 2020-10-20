@@ -19,6 +19,6 @@
 
 # Written by Subendra Kumar Sharma.
 
-export NODE_ENV="production" #"development or production"
-export PORT=3000
-export MINIMIZE=true
+export NODE_ENV="development" #"development or production"
+export PORT=3001
+export MINIMIZE=false

@@ -42,7 +42,7 @@ export const getNodelevel = (root, node) => {
 	return level;
 };
 
-export const printBinaryTree = (root, length) => {
+export const printBinaryTree = (root, length, func) => {
 	let _root = JSON.parse(JSON.stringify(root));
 
 	let s = new Array(length);
@@ -142,17 +142,21 @@ export const printBinaryTree = (root, length) => {
 			}, h: ${top.interval.high}</text>
 			<text class="interval-tree-print-node-minmax" dx="5" dy="45">m: ${
 				top.min
-			}, x: ${top.max}</text></g>`;
+			}, x: ${top.max}</text>
+			${
+				func
+					? `<text class="interval-tree-print-node-custom"  dx="5" dy="60">
+			${func(top)}</text>`
+					: ``
+			}
+			</g>`;
 
 		if (top.parent) {
-			const line = `<line x1="${top.parent.pos.c}" y1="${top.parent.level *
-				TOTAL_HEIGHT +
-				MARGIN +
-				BORDER +
-				HEIGHT +
-				BORDER}" x2="${top.pos.c}" y2="${top.level * TOTAL_HEIGHT +
-				MARGIN +
-				BORDER}" class="interval-tree-print-arrow" stroke="black"/>`;
+			const line = `<line x1="${top.parent.pos.c}" y1="${
+				top.parent.level * TOTAL_HEIGHT + MARGIN + BORDER + HEIGHT + BORDER
+			}" x2="${top.pos.c}" y2="${
+				top.level * TOTAL_HEIGHT + MARGIN + BORDER
+			}" class="interval-tree-print-arrow" stroke="black"/>`;
 			arrowsHtml.push(line);
 		}
 
@@ -169,9 +173,11 @@ export const printBinaryTree = (root, length) => {
 		html[i] += `</g>`;
 	}
 
-	return `<svg class="interval-tree-print" width="${maxLevelWidth +
-		40}" height="${(totalLevels + 1) * TOTAL_HEIGHT +
-		40}"><g class="interval-tree-print-container" transform="translate(20, 20)">${html.join(
+	return `<svg class="interval-tree-print" width="${
+		maxLevelWidth + 40
+	}" height="${
+		(totalLevels + 1) * TOTAL_HEIGHT + 40
+	}"><g class="interval-tree-print-container" transform="translate(20, 20)">${html.join(
 		""
 	)}${arrowsHtml.join("")}</g></svg>`;
 };
