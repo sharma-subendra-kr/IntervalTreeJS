@@ -483,12 +483,10 @@ Written by Subendra Kumar Sharma.
 
 function IntervalTreeRecursive(options) {
   this.root = null;
-  this.data = [];
   this.length = 0;
 
   if (options && Array.isArray(options.data)) {
-    this.data = JSON.parse(JSON.stringify(options.data));
-    this.constructTree();
+    this.constructTree(options.data);
   }
 }
 
@@ -508,11 +506,11 @@ IntervalTreeRecursive.prototype.constructNode = function (interval) {
   };
 };
 
-IntervalTreeRecursive.prototype.constructTree = function () {
-  var length = this.data.length;
+IntervalTreeRecursive.prototype.constructTree = function (data) {
+  var length = data.length;
 
   for (var i = 0; i < length; i++) {
-    this.root = this.insert(this.data[i], this.root);
+    this.root = this.insert(data[i], this.root);
   }
 };
 
@@ -829,12 +827,10 @@ Written by Subendra Kumar Sharma.
 
 function IntervalTreeIterative(options) {
   this.root = null;
-  this.data = [];
   this.length = 0;
 
   if (options && Array.isArray(options.data)) {
-    this.data = JSON.parse(JSON.stringify(options.data));
-    this.constructTree();
+    this.constructTree(options.data);
   }
 }
 
@@ -854,11 +850,11 @@ IntervalTreeIterative.prototype.constructNode = function (interval) {
   };
 };
 
-IntervalTreeIterative.prototype.constructTree = function () {
-  var length = this.data.length;
+IntervalTreeIterative.prototype.constructTree = function (data) {
+  var length = data.length;
 
   for (var i = 0; i < length; i++) {
-    this.insert(this.data[i]);
+    this.insert(data[i]);
   }
 };
 
