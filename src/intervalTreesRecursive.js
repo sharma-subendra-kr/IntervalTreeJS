@@ -46,12 +46,10 @@ import { printBinaryTree } from "./utils/printUtils";
 	*/
 function IntervalTreeRecursive(options) {
 	this.root = null;
-	this.data = [];
 	this.length = 0;
 
 	if (options && Array.isArray(options.data)) {
-		this.data = JSON.parse(JSON.stringify(options.data));
-		this.constructTree();
+		this.constructTree(options.data);
 	}
 }
 
@@ -68,10 +66,10 @@ IntervalTreeRecursive.prototype.constructNode = function (interval) {
 	};
 };
 
-IntervalTreeRecursive.prototype.constructTree = function () {
-	const length = this.data.length;
+IntervalTreeRecursive.prototype.constructTree = function (data) {
+	const length = data.length;
 	for (let i = 0; i < length; i++) {
-		this.root = this.insert(this.data[i], this.root);
+		this.root = this.insert(data[i], this.root);
 	}
 };
 
