@@ -23,18 +23,16 @@ Written by Subendra Kumar Sharma.
 
 */
 
-import { ArrayStack } from "Stack";
+import { ArrayStack as Stack } from "Stack";
 
 export const inOrder = function (node, parent, length) {
 	var current = node;
-	// var currentParent = parent;
 
 	const path = new Array(length);
 	let pathIter = -1;
 	path[++pathIter] = current;
 
 	while (current.left !== null) {
-		// currentParent = current;
 		current = current.left;
 		path[++pathIter] = current;
 	}
