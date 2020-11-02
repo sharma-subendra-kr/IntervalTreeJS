@@ -28,23 +28,33 @@ import { ArrayStack as Stack } from "Stack";
 export const inOrder = function (node, parent, length) {
 	var current = node;
 
-	const path = new Array(length);
-	let pathIter = -1;
-	path[++pathIter] = current;
+	const stack = new Stack();
+	stack.push(current);
+	// const path = new Array(length);
+	// let pathIter = -1;
+	// path[++pathIter] = current;
 
 	while (current.left !== null) {
 		current = current.left;
-		path[++pathIter] = current;
+		stack.push(current);
+		// path[++pathIter] = current;
 	}
 
 	const leafLow = current.interval.low;
-	let copyPathIter = pathIter;
+	// let copyPathIter = pathIter;
+	let copyPathIter = stack.ptr;
 	let top = null;
 
-	const currentToTopArr = new Array(pathIter + 1);
+	// const currentToTopArr = new Array(pathIter + 1);
+	const currentToTopArr = new Array(copyPathIter + 1);
 	let currentToTopArrIter = -1;
-	while (copyPathIter >= 0 && path[copyPathIter].interval.low === leafLow) {
-		top = path[copyPathIter];
+	// while (copyPathIter >= 0 && path[copyPathIter].interval.low === leafLow) {
+	while (
+		copyPathIter >= 0 &&
+		stack.stack[copyPathIter].interval.low === leafLow
+	) {
+		// top = path[copyPathIter];
+		top = stack.stack[copyPathIter];
 		copyPathIter--;
 		currentToTopArr[++currentToTopArrIter] = top;
 	}
@@ -54,18 +64,24 @@ export const inOrder = function (node, parent, length) {
 		// make the immediate left node of parent of top (or current if top === current) to null
 		//  OR right child of top (or current if top === current)
 		if (top.right !== null) {
-			path[copyPathIter].left = top.right;
+			// path[copyPathIter].left = top.right;
+			stack.stack[copyPathIter].left = top.right;
 			top.right = null;
 		} else {
-			path[copyPathIter].left = null;
+			stack.stack[copyPathIter].left = null;
 		}
 	}
-	pathIter = copyPathIter;
+	// pathIter = copyPathIter;
+	let pathIter = copyPathIter;
 	while (pathIter >= 0) {
 		// update min, max of all the nodes above top.
-		const newMinMax = getNewMinMax(path[pathIter]);
-		path[pathIter].min = newMinMax.min;
-		path[pathIter].max = newMinMax.max;
+
+		// const newMinMax = getNewMinMax(path[pathIter]);
+		// path[pathIter].min = newMinMax.min;
+		// path[pathIter].max = newMinMax.max;
+		const newMinMax = getNewMinMax(stack.stack[pathIter]);
+		stack.stack[pathIter].min = newMinMax.min;
+		stack.stack[pathIter].max = newMinMax.max;
 		pathIter--;
 	}
 
