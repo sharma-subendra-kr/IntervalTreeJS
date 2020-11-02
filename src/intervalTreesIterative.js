@@ -297,7 +297,9 @@ IntervalTreeIterative.prototype._remove = function (root, interval, d, comp) {
 	let parent = null;
 	let branched = null;
 
-	var removed = null;
+	let removed = null;
+
+	const predictedHeight = Math.ceil(Math.log2(this.length)) * 2;
 
 	var stack = new Array(this.length);
 	var stackIter = -1;
@@ -345,7 +347,7 @@ IntervalTreeIterative.prototype._remove = function (root, interval, d, comp) {
 					this.root = top.left;
 				}
 			} else {
-				var obj = inOrder(top.right, top);
+				var obj = inOrder(top.right, predictedHeight);
 				top.interval = obj.top.interval;
 				top.d = obj.top.d;
 				const temp = top.left;
@@ -402,6 +404,8 @@ IntervalTreeIterative.prototype._removeAll = function (
 	let parent = null;
 	let branched = null;
 
+	const predictedHeight = Math.ceil(Math.log2(this.length)) * 2;
+
 	var removeList = new Array(this.length);
 	var removeListIter = 0;
 
@@ -451,7 +455,7 @@ IntervalTreeIterative.prototype._removeAll = function (
 					this.root = top.left;
 				}
 			} else {
-				var obj = inOrder(top.right, top);
+				var obj = inOrder(top.right, predictedHeight);
 				top.interval = obj.top.interval;
 				top.d = obj.top.d;
 				const temp = top.left;

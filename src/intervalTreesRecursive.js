@@ -203,6 +203,8 @@ IntervalTreeRecursive.prototype._remove = function (
 ) {
 	if (root === null) return root;
 
+	const predictedHeight = Math.ceil(Math.log2(this.length)) * 2;
+
 	if (
 		root.interval.low === interval.low &&
 		root.interval.high === interval.high &&
@@ -222,7 +224,7 @@ IntervalTreeRecursive.prototype._remove = function (
 			return root.left;
 		}
 
-		var obj = inOrder(root.right, root);
+		var obj = inOrder(root.right, predictedHeight);
 		root.interval = obj.top.interval;
 		root.d = obj.top.d;
 		const temp = root.left;
@@ -272,6 +274,8 @@ IntervalTreeRecursive.prototype._removeAll = function (
 ) {
 	if (root === null) return root;
 
+	const predictedHeight = Math.ceil(Math.log2(this.length)) * 2;
+
 	if (root.interval.low >= interval.low) {
 		// go left
 		root.left = this._removeAll(root.left, interval, d, comp, removed);
@@ -307,7 +311,7 @@ IntervalTreeRecursive.prototype._removeAll = function (
 			return root.left;
 		}
 
-		var obj = inOrder(root.right, root);
+		var obj = inOrder(root.right, predictedHeight);
 		root.interval = obj.top.interval;
 		root.d = obj.top.d;
 		const temp = root.left;

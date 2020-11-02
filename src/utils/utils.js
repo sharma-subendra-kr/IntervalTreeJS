@@ -25,10 +25,10 @@ Written by Subendra Kumar Sharma.
 
 import { ArrayStack as Stack } from "Stack";
 
-export const inOrder = function (node, parent, length) {
+export const inOrder = function (node, predictedHeight) {
 	var current = node;
 
-	const stack = new Stack();
+	const stack = new Stack({ initialSize: predictedHeight });
 	stack.push(current);
 	// const path = new Array(length);
 	// let pathIter = -1;
