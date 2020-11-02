@@ -23,16 +23,18 @@ Written by Subendra Kumar Sharma.
 
 */
 
-export const inOrder = function(node, parent, length) {
-	var current = node;
-	var currentParent = parent;
+import { ArrayStack } from "Stack";
 
-	let path = new Array(length);
+export const inOrder = function (node, parent, length) {
+	var current = node;
+	// var currentParent = parent;
+
+	const path = new Array(length);
 	let pathIter = -1;
 	path[++pathIter] = current;
 
 	while (current.left !== null) {
-		currentParent = current;
+		// currentParent = current;
 		current = current.left;
 		path[++pathIter] = current;
 	}
@@ -41,13 +43,14 @@ export const inOrder = function(node, parent, length) {
 	let copyPathIter = pathIter;
 	let top = null;
 
-	let currentToTopArr = new Array(pathIter + 1);
+	const currentToTopArr = new Array(pathIter + 1);
 	let currentToTopArrIter = -1;
 	while (copyPathIter >= 0 && path[copyPathIter].interval.low === leafLow) {
 		top = path[copyPathIter];
 		copyPathIter--;
 		currentToTopArr[++currentToTopArrIter] = top;
 	}
+	currentToTopArr.length = currentToTopArrIter + 1;
 
 	if (copyPathIter >= 0) {
 		// make the immediate left node of parent of top (or current if top === current) to null
@@ -62,7 +65,7 @@ export const inOrder = function(node, parent, length) {
 	pathIter = copyPathIter;
 	while (pathIter >= 0) {
 		// update min, max of all the nodes above top.
-		let newMinMax = getNewMinMax(path[pathIter]);
+		const newMinMax = getNewMinMax(path[pathIter]);
 		path[pathIter].min = newMinMax.min;
 		path[pathIter].max = newMinMax.max;
 		pathIter--;
@@ -83,14 +86,12 @@ export const inOrder = function(node, parent, length) {
 		}
 	}
 
-	currentToTopArr = removeTrailingEmptyFromArray(currentToTopArr);
-
 	return { top, current, right, currentToTopArr };
 };
 
-export const fixMinMaxFromCurrentToTop = function(currentToTopArr) {
+export const fixMinMaxFromCurrentToTop = function (currentToTopArr) {
 	let iter = 0;
-	let len = currentToTopArr.length;
+	const len = currentToTopArr.length;
 	while (iter < len) {
 		const newMinMax = getNewMinMax(currentToTopArr[iter]);
 		currentToTopArr[iter].min = newMinMax.min;
@@ -99,14 +100,14 @@ export const fixMinMaxFromCurrentToTop = function(currentToTopArr) {
 	}
 };
 
-export const getNewMinMax = function(root) {
+export const getNewMinMax = function (root) {
 	let min = root.interval.low;
 	let max = root.interval.high;
 
-	let leftMin = !isNaN(root.left?.min) ? root.left.min : null;
-	let rightMin = !isNaN(root.right?.min) ? root.right?.min : null;
-	let leftMax = !isNaN(root.left?.max) ? root.left?.max : null;
-	let rightMax = !isNaN(root.right?.max) ? root.right?.max : null;
+	const leftMin = !isNaN(root.left?.min) ? root.left.min : null;
+	const rightMin = !isNaN(root.right?.min) ? root.right?.min : null;
+	const leftMax = !isNaN(root.left?.max) ? root.left?.max : null;
+	const rightMax = !isNaN(root.right?.max) ? root.right?.max : null;
 
 	if (leftMin < min && leftMin !== null) {
 		min = leftMin;
@@ -125,18 +126,4 @@ export const getNewMinMax = function(root) {
 	}
 
 	return { min, max };
-};
-
-export const removeTrailingEmptyFromArray = function(source) {
-	let count = 0;
-	let len = source.length;
-	for (let i = 0; i < len; i++) {
-		if (source[i]) count++;
-	}
-	let dest = new Array(count);
-	for (let i = 0; i < count; i++) {
-		dest[i] = source[i];
-	}
-
-	return dest;
 };

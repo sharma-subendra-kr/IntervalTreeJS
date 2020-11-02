@@ -39,5 +39,9 @@
     "webpack-dev-server": "^3.10.3",
     "webpack-merge": "^5.0.9",
     "webpack-notifier": "^1.8.0"
+  },
+  "dependencies": {
+    "Stack": "git+https://sharma-subendra-kr@github.com/sharma-subendra-kr/Stack.git#master",
+    "Queue": "git+https://sharma-subendra-kr@github.com/sharma-subendra-kr/Queue.git#master"
   }
 }
