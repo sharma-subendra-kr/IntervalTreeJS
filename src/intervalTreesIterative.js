@@ -87,12 +87,6 @@ IntervalTreeIterative.prototype.constructTree = function (data) {
 	}
 };
 
-IntervalTreeIterative.prototype.insertRoot = function (interval) {
-	// this function is deprecated
-	this.root = this.constructNode(interval);
-	return this.root;
-};
-
 IntervalTreeIterative.prototype.getRoot = function () {
 	return this.root;
 };
@@ -212,24 +206,13 @@ IntervalTreeIterative.prototype._findAll = function (
 	}
 
 	this.stack.empty();
-	// var stack = new Array(this.length);
-	// var stackIter = 0;
-
-	// var queue = new Array(this.length);
-	// var queueFront = -1;
-	// var queueRear = 0;
-	// queue[++queueFront] = root;
 	this.queue.empty();
 	this.queue.enqueue(root);
 
 	if (root === null) return null;
 
-	// while (queueFront <= queueRear) {
 	while (!this.queue.isEmpty()) {
 		// check to see if queue is not empty
-
-		// var front = queue[queueFront];
-		// queueFront++;
 		const front = this.queue.dequeue();
 
 		if (
@@ -237,28 +220,19 @@ IntervalTreeIterative.prototype._findAll = function (
 			(d !== null && d !== undefined ? front.d === d : true) &&
 			(comp ? comp(front, interval, d) : true)
 		) {
-			// stack[stackIter++] = front;
 			this.stack.push(front);
 		}
 
 		if (front.left !== null && front.left.max >= interval.low) {
 			// go left
-			// queue[++queueRear] = front.left;
 			this.queue.enqueue(front.left);
 		}
 		if (front.right !== null && front.right.min <= interval.high) {
 			// go right
-			// queue[++queueRear] = front.right;
 			this.queue.enqueue(front.right);
 		}
 	}
 
-	// var finalStack = new Array(stackIter);
-	// for (var i = 0; i < stackIter; i++) {
-	// 	finalStack[i] = stack[i];
-	// }
-
-	// return finalStack;
 	return this.stack.getData();
 };
 
@@ -279,46 +253,27 @@ IntervalTreeIterative.prototype._findUsingComparator = function (
 	if (root === null) return [];
 
 	this.result.empty();
-	// const result = new Array(this.length);
-	// let count = 0;
-
 	this.stack.empty();
 	let top;
-	// const stack = new Array(this.length);
-	// let stackIter = -1;
-	// let top;
 
 	this.stack.push(root);
-	// stack[++stackIter] = root;
 
 	while (!this.stack.isEmpty()) {
-		// while (stackIter >= 0) {
 		top = this.stack.pop();
-		// top = stack[stackIter];
-		// stackIter--;
 
 		if (comp(top)) {
-			// result[count++] = top;
 			this.result.push(top);
 		}
 
 		if (top.right !== null && rcomp(top)) {
-			// stack[++stackIter] = top.right;
 			this.stack.push(top.right);
 		}
 
 		if (top.left !== null && lcomp(top)) {
-			// stack[++stackIter] = top.left;
 			this.stack.push(top.left);
 		}
 	}
 
-	// const filteredResult = new Array(count);
-	// for (let i = 0; i < count; i++) {
-	// 	filteredResult[i] = result[i];
-	// }
-
-	// return filteredResult;
 	return this.result.getData();
 };
 
@@ -335,27 +290,17 @@ IntervalTreeIterative.prototype._remove = function (root, interval, d, comp) {
 	const predictedHeight = Math.ceil(Math.log2(this.length)) * 2;
 
 	this.stack.empty();
-	// var stack = new Array(this.length);
-	// var stackIter = -1;
-
 	this.path.empty();
-	// const path = new Array(this.length);
-	// let pathIter = -1;
 
 	this.stack.push(root);
-	// stack[++stackIter] = root;
 
 	if (root === null) return null;
 
-	// while (stackIter >= 0) {
 	while (!this.stack.isEmpty()) {
 		// check to see if stack is not empty
 
 		// pop top most item
 		let top = this.stack.pop();
-		// var top = stack[stackIter];
-		// stack[stackIter] = null;
-		// stackIter--;
 
 		if (
 			top.interval.low === interval.low &&
@@ -399,11 +344,9 @@ IntervalTreeIterative.prototype._remove = function (root, interval, d, comp) {
 
 				fixMinMaxFromCurrentToTop(obj.currentToTopArr);
 			}
-			// if (top) path[++pathIter] = top;
 			if (top) this.path.push(top);
 			break;
 		}
-		// path[++pathIter] = top;
 		this.path.push(top);
 
 		if (top.right !== null && top.interval.low < interval.low) {
@@ -412,24 +355,16 @@ IntervalTreeIterative.prototype._remove = function (root, interval, d, comp) {
 			// go right
 			parent = top;
 			branched = "right";
-			// stack[++stackIter] = top.right;
 			this.stack.push(top.right);
 		} else if (top.left !== null && top.interval.low >= interval.low) {
 			// go left
 			parent = top;
 			branched = "left";
-			// stack[++stackIter] = top.left;
 			this.stack.push(top.left);
 		}
 	}
 
-	// while (pathIter >= 0) {
 	while (!this.path.isEmpty()) {
-		// const newMinMax = getNewMinMax(path[pathIter]);
-		// path[pathIter].min = newMinMax.min;
-		// path[pathIter].max = newMinMax.max;
-		// pathIter--;
-
 		const pathTop = this.path.pop();
 		const newMinMax = getNewMinMax(pathTop);
 		pathTop.min = newMinMax.min;
@@ -455,30 +390,17 @@ IntervalTreeIterative.prototype._removeAll = function (
 	const predictedHeight = Math.ceil(Math.log2(this.length)) * 2;
 
 	this.removeList.empty();
-	// var removeList = new Array(this.length);
-	// var removeListIter = 0;
-
 	this.stack.empty();
-	// var stack = new Array(this.length);
-	// var stackIter = -1;
-
 	this.path.empty();
-	// const path = new Array(this.length);
-	// let pathIter = -1;
 
 	this.stack.push(root);
-	// stack[++stackIter] = root;
 
 	if (root === null) return null;
 
-	// while (stackIter >= 0) {
 	while (!this.stack.isEmpty()) {
 		// check to see if stack is not empty
 
 		// pop top most item
-		// var top = stack[stackIter];
-		// stack[stackIter] = null;
-		// stackIter--;
 		let top = this.stack.pop();
 
 		if (
@@ -487,11 +409,6 @@ IntervalTreeIterative.prototype._removeAll = function (
 			(d !== null && d !== undefined ? top.d === d : true) &&
 			(comp ? comp(top, interval, d) : true)
 		) {
-			// removeList[removeListIter++] = {
-			// 	low: top.interval.low,
-			// 	high: top.interval.high,
-			// 	d: top.d,
-			// };
 			this.removeList.push({
 				low: top.interval.low,
 				high: top.interval.high,
@@ -528,11 +445,9 @@ IntervalTreeIterative.prototype._removeAll = function (
 
 				fixMinMaxFromCurrentToTop(obj.currentToTopArr);
 			}
-			// if (top) stack[++stackIter] = top;
 			if (top) this.stack.push(top);
 			continue;
 		}
-		// path[++pathIter] = top;
 		this.path.push(top);
 
 		if (top.right !== null && top.interval.low < interval.low) {
@@ -541,36 +456,21 @@ IntervalTreeIterative.prototype._removeAll = function (
 			// go right
 			parent = top;
 			branched = "right";
-			// stack[++stackIter] = top.right;
 			this.stack.push(top.right);
 		} else if (top.left !== null && top.interval.low >= interval.low) {
 			// go left
 			parent = top;
 			branched = "left";
-			// stack[++stackIter] = top.left;
 			this.stack.push(top.left);
 		}
 	}
 
-	// while (pathIter >= 0) {
 	while (!this.path.isEmpty()) {
-		// const newMinMax = getNewMinMax(path[pathIter]);
-		// path[pathIter].min = newMinMax.min;
-		// path[pathIter].max = newMinMax.max;
-		// pathIter--;
-
 		const pathTop = this.path.pop();
 		const newMinMax = getNewMinMax(pathTop);
 		pathTop.min = newMinMax.min;
 		pathTop.max = newMinMax.max;
 	}
-
-	// var finalRemoveList = new Array(removeListIter);
-	// for (var i = 0; i < removeListIter; i++) {
-	// 	finalRemoveList[i] = removeList[i];
-	// }
-
-	// return finalRemoveList;
 
 	return this.removeList.getData();
 };
@@ -612,19 +512,15 @@ IntervalTreeIterative.prototype.getSortedData = function () {
 	let iter = 0;
 
 	this.stack.empty();
-	// const stack = new Array(this.length);
-	// let stackIter = -1;
 
 	let curr = this.root;
 
 	while (curr !== null || !this.stack.isEmpty()) {
 		while (curr !== null) {
-			// stack[++stackIter] = curr;
 			this.stack.push(curr);
 			curr = curr.left;
 		}
 
-		// curr = stack[stackIter--];
 		curr = this.stack.pop();
 		elements[iter++] = {
 			interval: { low: curr.interval.low, high: curr.interval.high },
