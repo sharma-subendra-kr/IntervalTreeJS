@@ -23,8 +23,8 @@ Written by Subendra Kumar Sharma.
 
 */
 
-import { ListStack as Stack } from "Stack";
-import { ListQueue as Queue } from "Queue";
+import { ArrayStack as Stack } from "Stack";
+import { ArrayQueue as Queue } from "Queue";
 
 import {
 	inOrder,
