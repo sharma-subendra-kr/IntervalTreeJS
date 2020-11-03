@@ -49,4 +49,9 @@ window.onload = function () {
 		it.remove(obj, d);
 		printHtmlTree();
 	};
+
+	window.removeAll = function (obj, d) {
+		it.removeAll(obj, d);
+		printHtmlTree();
+	};
 };
