@@ -48,6 +48,8 @@ import { printBinaryTree } from "./utils/printUtils";
 		}
 	*/
 function IntervalTreeIterative(options) {
+	this.options = options;
+
 	this.root = null;
 	this.length = 0;
 
@@ -65,6 +67,8 @@ function IntervalTreeIterative(options) {
 	if (options && Array.isArray(options.data)) {
 		this.constructTree(options.data);
 	}
+
+	delete this.options.data;
 }
 
 IntervalTreeIterative.prototype.constructor = IntervalTreeIterative;
@@ -547,6 +551,11 @@ IntervalTreeIterative.prototype.isExact = function (interval, _interval) {
 	} else {
 		return false;
 	}
+};
+
+IntervalTreeIterative.prototype.setData = function (data) {
+	this.emptyTree();
+	this.constructTree(data);
 };
 
 IntervalTreeIterative.prototype.emptyTree = function () {
