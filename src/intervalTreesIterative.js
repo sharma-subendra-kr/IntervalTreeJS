@@ -551,6 +551,56 @@ IntervalTreeIterative.prototype.isExact = function (interval, _interval) {
 
 IntervalTreeIterative.prototype.emptyTree = function () {
 	this.root = null;
+
+	let len = this.queue.queue.length;
+	for (let i = 0; i < len; i++) {
+		if (this.queue.queue[i]) {
+			this.queue.queue[i].interval = null;
+			this.queue.queue[i].d = null;
+			this.queue.queue[i].left = null;
+			this.queue.queue[i].right = null;
+		}
+	}
+
+	len = this.stack.stack.length;
+	for (let i = 0; i < len; i++) {
+		if (this.stack.stack[i]) {
+			this.stack.stack[i].interval = null;
+			this.stack.stack[i].d = null;
+			this.stack.stack[i].left = null;
+			this.stack.stack[i].right = null;
+		}
+	}
+
+	len = this.path.stack.length;
+	for (let i = 0; i < len; i++) {
+		if (this.path.stack[i]) {
+			this.path.stack[i].interval = null;
+			this.path.stack[i].d = null;
+			this.path.stack[i].left = null;
+			this.path.stack[i].right = null;
+		}
+	}
+
+	len = this.result.stack.length;
+	for (let i = 0; i < len; i++) {
+		if (this.result.stack[i]) {
+			this.result.stack[i].interval = null;
+			this.result.stack[i].d = null;
+			this.result.stack[i].left = null;
+			this.result.stack[i].right = null;
+		}
+	}
+
+	len = this.removeList.stack.length;
+	for (let i = 0; i < len; i++) {
+		if (this.removeList.stack[i]) {
+			this.removeList.stack[i].interval = null;
+			this.removeList.stack[i].d = null;
+			this.removeList.stack[i].left = null;
+			this.removeList.stack[i].right = null;
+		}
+	}
 };
 
 IntervalTreeIterative.prototype.printHtmlTree = function (func) {
