@@ -1015,6 +1015,7 @@ Written by Subendra Kumar Sharma.
 function IntervalTreeIterative(options) {
   var _options$data, _options$data2;
 
+  this.options = options;
   this.root = null;
   this.length = 0;
   this.initialStackSize = (options === null || options === void 0 ? void 0 : (_options$data = options.data) === null || _options$data === void 0 ? void 0 : _options$data.length) * 2 || options.initialStackSize || 500;
@@ -1038,6 +1039,8 @@ function IntervalTreeIterative(options) {
   if (options && Array.isArray(options.data)) {
     this.constructTree(options.data);
   }
+
+  delete this.options.data;
 }
 
 IntervalTreeIterative.prototype.constructor = IntervalTreeIterative;
@@ -1461,6 +1464,11 @@ IntervalTreeIterative.prototype.isExact = function (interval, _interval) {
   } else {
     return false;
   }
+};
+
+IntervalTreeIterative.prototype.setData = function (data) {
+  this.emptyTree();
+  this.constructTree(data);
 };
 
 IntervalTreeIterative.prototype.emptyTree = function () {
