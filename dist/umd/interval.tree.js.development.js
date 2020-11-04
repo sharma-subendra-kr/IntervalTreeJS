@@ -1013,7 +1013,7 @@ Written by Subendra Kumar Sharma.
 	*/
 
 function IntervalTreeIterative(options) {
-  var _options$data, _options$data2;
+  var _options$data, _options$data2, _this$options;
 
   this.options = options;
   this.root = null;
@@ -1040,7 +1040,7 @@ function IntervalTreeIterative(options) {
     this.constructTree(options.data);
   }
 
-  delete this.options.data;
+  (_this$options = this.options) === null || _this$options === void 0 ? true : delete _this$options.data;
 }
 
 IntervalTreeIterative.prototype.constructor = IntervalTreeIterative;
