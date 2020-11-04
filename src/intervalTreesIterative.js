@@ -560,6 +560,7 @@ IntervalTreeIterative.prototype.setData = function (data) {
 
 IntervalTreeIterative.prototype.emptyTree = function () {
 	this.root = null;
+	this.length = 0;
 
 	let len = this.queue.queue.length;
 	for (let i = 0; i < len; i++) {

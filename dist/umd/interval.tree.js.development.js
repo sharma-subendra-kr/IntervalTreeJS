@@ -1473,6 +1473,7 @@ IntervalTreeIterative.prototype.setData = function (data) {
 
 IntervalTreeIterative.prototype.emptyTree = function () {
   this.root = null;
+  this.length = 0;
   var len = this.queue.queue.length;
 
   for (var i = 0; i < len; i++) {
