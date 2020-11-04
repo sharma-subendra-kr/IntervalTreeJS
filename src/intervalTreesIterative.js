@@ -54,9 +54,9 @@ function IntervalTreeIterative(options) {
 	this.length = 0;
 
 	this.initialStackSize =
-		options?.data?.length * 2 || options.initialStackSize || 500;
+		options?.data?.length * 2 || options?.initialStackSize || 500;
 	this.initialQueueSize =
-		options?.data?.length * 2 || options.initialQueueSize || 500;
+		options?.data?.length * 2 || options?.initialQueueSize || 500;
 
 	this.queue = new Queue({ initialSize: this.initialQueueSize });
 	this.stack = new Stack({ initialSize: this.initialStackSize });
@@ -64,7 +64,7 @@ function IntervalTreeIterative(options) {
 	this.result = new Stack({ initialSize: this.initialStackSize });
 	this.removeList = new Stack({ initialSize: this.initialStackSize });
 
-	if (options && Array.isArray(options.data)) {
+	if (Array.isArray(options?.data)) {
 		this.constructTree(options.data);
 	}
 

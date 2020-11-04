@@ -665,7 +665,7 @@ function IntervalTreeRecursive(options) {
   this.root = null;
   this.length = 0;
 
-  if (options && Array.isArray(options.data)) {
+  if (Array.isArray(options === null || options === void 0 ? void 0 : options.data)) {
     this.constructTree(options.data);
   }
 }
@@ -1018,8 +1018,8 @@ function IntervalTreeIterative(options) {
   this.options = options;
   this.root = null;
   this.length = 0;
-  this.initialStackSize = (options === null || options === void 0 ? void 0 : (_options$data = options.data) === null || _options$data === void 0 ? void 0 : _options$data.length) * 2 || options.initialStackSize || 500;
-  this.initialQueueSize = (options === null || options === void 0 ? void 0 : (_options$data2 = options.data) === null || _options$data2 === void 0 ? void 0 : _options$data2.length) * 2 || options.initialQueueSize || 500;
+  this.initialStackSize = (options === null || options === void 0 ? void 0 : (_options$data = options.data) === null || _options$data === void 0 ? void 0 : _options$data.length) * 2 || (options === null || options === void 0 ? void 0 : options.initialStackSize) || 500;
+  this.initialQueueSize = (options === null || options === void 0 ? void 0 : (_options$data2 = options.data) === null || _options$data2 === void 0 ? void 0 : _options$data2.length) * 2 || (options === null || options === void 0 ? void 0 : options.initialQueueSize) || 500;
   this.queue = new Queue_dist["ArrayQueue"]({
     initialSize: this.initialQueueSize
   });
@@ -1036,7 +1036,7 @@ function IntervalTreeIterative(options) {
     initialSize: this.initialStackSize
   });
 
-  if (options && Array.isArray(options.data)) {
+  if (Array.isArray(options === null || options === void 0 ? void 0 : options.data)) {
     this.constructTree(options.data);
   }
 

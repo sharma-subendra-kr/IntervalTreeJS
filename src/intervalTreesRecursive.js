@@ -48,7 +48,7 @@ function IntervalTreeRecursive(options) {
 	this.root = null;
 	this.length = 0;
 
-	if (options && Array.isArray(options.data)) {
+	if (Array.isArray(options?.data)) {
 		this.constructTree(options.data);
 	}
 }
