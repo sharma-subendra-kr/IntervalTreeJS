@@ -68,7 +68,7 @@ function IntervalTreeIterative(options) {
 		this.constructTree(options.data);
 	}
 
-	delete this.options.data;
+	delete this.options?.data;
 }
 
 IntervalTreeIterative.prototype.constructor = IntervalTreeIterative;
