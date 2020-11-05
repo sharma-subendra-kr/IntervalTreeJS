@@ -36,4 +36,18 @@ module.exports = merge(common, {
 				? "interval.tree.js.production.min.js"
 				: "interval.tree.js.development.js",
 	},
+	externals: {
+		Queue: {
+			commonjs: "Queue",
+			commonjs2: "Queue",
+			amd: "Queue",
+			root: "Queue",
+		},
+		Stack: {
+			commonjs: "Stack",
+			commonjs2: "Stack",
+			amd: "Stack",
+			root: "Stack",
+		},
+	},
 });
