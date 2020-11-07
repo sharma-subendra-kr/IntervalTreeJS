@@ -1304,7 +1304,7 @@ IntervalTreeIterative.prototype.setData = function (data) {
 IntervalTreeIterative.prototype.emptyTree = function () {
   this.root = null;
   this.length = 0;
-  var len = this.queue.queue.length;
+  var len = Math.max(this.queue.queue.length, this.stack.stack.length, this.path.stack.length, this.result.stack.length, this.removeList.stack.length);
 
   for (var i = 0; i < len; i++) {
     if (this.queue.queue[i]) {
@@ -1313,49 +1313,33 @@ IntervalTreeIterative.prototype.emptyTree = function () {
       this.queue.queue[i].left = null;
       this.queue.queue[i].right = null;
     }
-  }
 
-  len = this.stack.stack.length;
-
-  for (var _i = 0; _i < len; _i++) {
-    if (this.stack.stack[_i]) {
-      this.stack.stack[_i].interval = null;
-      this.stack.stack[_i].d = null;
-      this.stack.stack[_i].left = null;
-      this.stack.stack[_i].right = null;
+    if (this.stack.stack[i]) {
+      this.stack.stack[i].interval = null;
+      this.stack.stack[i].d = null;
+      this.stack.stack[i].left = null;
+      this.stack.stack[i].right = null;
     }
-  }
 
-  len = this.path.stack.length;
-
-  for (var _i2 = 0; _i2 < len; _i2++) {
-    if (this.path.stack[_i2]) {
-      this.path.stack[_i2].interval = null;
-      this.path.stack[_i2].d = null;
-      this.path.stack[_i2].left = null;
-      this.path.stack[_i2].right = null;
+    if (this.path.stack[i]) {
+      this.path.stack[i].interval = null;
+      this.path.stack[i].d = null;
+      this.path.stack[i].left = null;
+      this.path.stack[i].right = null;
     }
-  }
 
-  len = this.result.stack.length;
-
-  for (var _i3 = 0; _i3 < len; _i3++) {
-    if (this.result.stack[_i3]) {
-      this.result.stack[_i3].interval = null;
-      this.result.stack[_i3].d = null;
-      this.result.stack[_i3].left = null;
-      this.result.stack[_i3].right = null;
+    if (this.result.stack[i]) {
+      this.result.stack[i].interval = null;
+      this.result.stack[i].d = null;
+      this.result.stack[i].left = null;
+      this.result.stack[i].right = null;
     }
-  }
 
-  len = this.removeList.stack.length;
-
-  for (var _i4 = 0; _i4 < len; _i4++) {
-    if (this.removeList.stack[_i4]) {
-      this.removeList.stack[_i4].interval = null;
-      this.removeList.stack[_i4].d = null;
-      this.removeList.stack[_i4].left = null;
-      this.removeList.stack[_i4].right = null;
+    if (this.removeList.stack[i]) {
+      this.removeList.stack[i].interval = null;
+      this.removeList.stack[i].d = null;
+      this.removeList.stack[i].left = null;
+      this.removeList.stack[i].right = null;
     }
   }
 };
