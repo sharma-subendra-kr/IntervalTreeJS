@@ -192,9 +192,10 @@ IntervalTreeIterative.prototype.findAll = function (
 	interval,
 	d,
 	findType,
-	comp
+	comp,
+	one = false
 ) {
-	return this._findAll(this.root, interval, d, findType, comp);
+	return this._findAll(this.root, interval, d, findType, comp, one);
 };
 
 IntervalTreeIterative.prototype._findAll = function (
@@ -202,7 +203,8 @@ IntervalTreeIterative.prototype._findAll = function (
 	interval,
 	d,
 	findType,
-	comp
+	comp,
+	one
 ) {
 	findType = findType || false;
 	if (findType === true) {
@@ -227,6 +229,9 @@ IntervalTreeIterative.prototype._findAll = function (
 			(comp ? comp(front, interval, d) : true)
 		) {
 			this.stack.push(front);
+			if (one === true) {
+				return this.stack.getData();
+			}
 		}
 
 		if (front.left !== null && front.left.max >= interval.low) {
