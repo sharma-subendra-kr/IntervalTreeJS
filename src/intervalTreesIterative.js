@@ -565,6 +565,11 @@ IntervalTreeIterative.prototype.setData = function (data) {
 	this.constructTree(data);
 };
 
+IntervalTreeIterative.prototype.reset = function () {
+	this.root = null;
+	this.length = 0;
+};
+
 IntervalTreeIterative.prototype.emptyTree = function () {
 	this.root = null;
 	this.length = 0;
