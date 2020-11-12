@@ -584,10 +584,12 @@ IntervalTreeRecursive.prototype._find = function (root, interval, d, findType, c
   if (root.left !== null && root.left.max >= interval.low) {
     // go left
     return this._find(root.left, interval, d, findType, comp);
-  } else {
+  } else if (root.right !== null && root.right.min <= interval.high) {
     // go right
     return this._find(root.right, interval, d, findType, comp);
   }
+
+  return null;
 };
 
 IntervalTreeRecursive.prototype.findAll = function (interval, d, findType, comp) {
@@ -973,9 +975,11 @@ IntervalTreeIterative.prototype._find = function (root, interval, d, findType, c
     if (root.left !== null && root.left.max >= interval.low) {
       // go left
       root = root.left;
-    } else {
+    } else if (root.right !== null && root.right.min <= interval.high) {
       // go right
       root = root.right;
+    } else {
+      return null;
     }
   }
 
@@ -983,10 +987,11 @@ IntervalTreeIterative.prototype._find = function (root, interval, d, findType, c
 };
 
 IntervalTreeIterative.prototype.findAll = function (interval, d, findType, comp) {
-  return this._findAll(this.root, interval, d, findType, comp);
+  var one = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
+  return this._findAll(this.root, interval, d, findType, comp, one);
 };
 
-IntervalTreeIterative.prototype._findAll = function (root, interval, d, findType, comp) {
+IntervalTreeIterative.prototype._findAll = function (root, interval, d, findType, comp, one) {
   findType = findType || false;
 
   if (findType === true) {
@@ -1006,6 +1011,10 @@ IntervalTreeIterative.prototype._findAll = function (root, interval, d, findType
 
     if (findType(front.interval, interval) && (d !== null && d !== undefined ? front.d === d : true) && (comp ? comp(front, interval, d) : true)) {
       this.stack.push(front);
+
+      if (one === true) {
+        return this.stack.getData();
+      }
     }
 
     if (front.left !== null && front.left.max >= interval.low) {
@@ -1299,6 +1308,11 @@ IntervalTreeIterative.prototype.isExact = function (interval, _interval) {
 IntervalTreeIterative.prototype.setData = function (data) {
   this.emptyTree();
   this.constructTree(data);
+};
+
+IntervalTreeIterative.prototype.reset = function () {
+  this.root = null;
+  this.length = 0;
 };
 
 IntervalTreeIterative.prototype.emptyTree = function () {
