@@ -177,9 +177,11 @@ IntervalTreeIterative.prototype._find = function (
 		if (root.left !== null && root.left.max >= interval.low) {
 			// go left
 			root = root.left;
-		} else {
+		} else if (root.right !== null && root.right.min <= interval.high) {
 			// go right
 			root = root.right;
+		} else {
+			return null;
 		}
 	}
 

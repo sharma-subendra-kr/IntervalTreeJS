@@ -143,10 +143,12 @@ IntervalTreeRecursive.prototype._find = function (
 	if (root.left !== null && root.left.max >= interval.low) {
 		// go left
 		return this._find(root.left, interval, d, findType, comp);
-	} else {
+	} else if (root.right !== null && root.right.min <= interval.high) {
 		// go right
 		return this._find(root.right, interval, d, findType, comp);
 	}
+
+	return null;
 };
 
 IntervalTreeRecursive.prototype.findAll = function (
